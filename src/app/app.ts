@@ -1,12 +1,19 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component } from '@angular/core';
+import { EventService } from './services/services.event';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
 export class App {
-  protected readonly title = signal('az900-event-platform');
+  events: any[] = [];
+
+  constructor(private eventService: EventService) {}
+
+  ngOnInit() {
+    this.eventService.getEvents().subscribe(data => {
+      this.events = data;
+    });
+  }
 }
